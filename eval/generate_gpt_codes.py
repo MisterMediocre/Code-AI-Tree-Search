@@ -62,6 +62,7 @@ def generate_apps_prompt(args, test_case_path, prompt_path, solutions_path, toke
         _input += "\nUse Standard Input format"#\n"
     else:
         _input += "\nUse Call-Based format"#\n"
+    _input += "\nGive your answer compatible with Python 3"#\n" 
 
     _input += "\nANSWER:\n"
 

@@ -2,11 +2,11 @@
 
 # Used for evaluation and some common for train too
 numpy
-pyext
+# pyext
 sacrebleu
 sacremoses
 -f https://download.pytorch.org/whl/torch_stable.html
-torch==1.12.1+cu116
+# torch==1.12.1+cu116
 transformers
 psutil
 scipy

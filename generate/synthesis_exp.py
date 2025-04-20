@@ -180,7 +180,7 @@ if __name__ == '__main__':
     import argparse
 
     parser = argparse.ArgumentParser()
-    parser.add_argument("--arch", default="gpt2", choices=transformers.GPT2_PRETRAINED_MODEL_ARCHIVE_LIST)
+    parser.add_argument("--arch", default="gpt2")
     parser.add_argument("-l", "--load", default="../models/1.5B", type=str)
     parser.add_argument("--load-value", default=None, type=str, help="An optional value function for evaluating partial programs.")
     parser.add_argument("-t","--test-loc", default="../data_split/test.json", type=str, help="This file specifies the locations of the test set of the code dataset.")
@@ -250,6 +250,9 @@ if __name__ == '__main__':
 
     args.device = torch.device('cuda') if torch.cuda.is_available() and not args.no_cuda\
                   else torch.device('cpu')
+
+    # For local runs on a Macbook
+    # args.device = torch.device('mps')
 
     if args.alg == 'sample':
         args.ts_mode = 'sample'

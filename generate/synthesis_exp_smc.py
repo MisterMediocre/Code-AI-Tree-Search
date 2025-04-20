@@ -209,7 +209,7 @@ if __name__ == '__main__':
     import argparse
 
     parser = argparse.ArgumentParser()
-    parser.add_argument("--arch", default="gpt2", choices=transformers.GPT2_PRETRAINED_MODEL_ARCHIVE_LIST)
+    parser.add_argument("--arch", default="gpt2")
     parser.add_argument("-l", "--load", default="../models/1.5B", type=str)
     parser.add_argument("-t","--test-loc", default="../data_split/test.json", type=str)
     parser.add_argument("--horizon", default=1024, type=int)
