@@ -6,7 +6,7 @@ pyext
 sacrebleu
 sacremoses
 -f https://download.pytorch.org/whl/torch_stable.html
-torch==1.12.1+cu116
+# torch==1.12.1+cu116
 transformers
 psutil
 scipy
@@ -14,8 +14,9 @@ gym
 
 # Only needed for training
 # deepspeed
-# accelerate
 # tensorboardX
+accelerate
+safetensors
 
 # for plotting trees and experiment figures
 networkx

@@ -7,6 +7,7 @@ import json
 import random
 
 import os
+import re
 
 from reindent import run as run_reindent
 
@@ -58,12 +59,12 @@ def generate_apps_prompt(args, test_case_path, prompt_path, solutions_path, toke
 
     with open(test_case_path, "r") as f:
         data = json.load(f)
-    if not data.get("fn_name"):
-        _input += "\nUse Standard Input format"#\n"
-    else:
-        _input += "\nUse Call-Based format"#\n"
+
+    _input += "\n\nYou are a Python3 code generator.  Output **only** valid Python code. No explanations, no commentary, no filenames, no Markdown formatting. You will spit out a code block that can be pasted into any script. It must read the input, execute the logic and then print the output. Ensure that you invoke the main() or solve() function at the end if you're writing your code inside them."
 
     _input += "\nANSWER:\n"
+
+    print(_input)
 
     if args.peeking > 0.0:
         # Need to do some peeking.
@@ -96,9 +97,33 @@ def generate_apps_prompt(args, test_case_path, prompt_path, solutions_path, toke
 
 def get_output_str_from_state_for_apps(s):
     """
-    Get the code from the transformer output
+    Get the code from the transformer output.
+    Extracts the content inside triple backticks if present, without using regex.
     """
+    # If the model output includes "ANSWER:", strip everything before it
     if "ANSWER:" in s:
-        s = s.split("ANSWER:\n")[1]
+        s = s.split("ANSWER:\n", 1)[1]
 
-    return s.replace("<|endoftext|>", "")
+    # Remove the end-of-text sentinel
+    s = s.replace("<|endoftext|>", "")
+
+    if 'if __name__ == "__main__":' in s:
+        print("Replacing __name__ == '__main__' with True")
+        # Perform the substitution
+        s = re.sub(r'if __name__ == "__main__":', 'if True:', s)
+
+    # Look for the first opening triple backticks
+    start = s.find("```")
+    if start != -1:
+        # Find the end of the opening fence (skip any language tag)
+        newline_after_fence = s.find("\n", start + 3)
+        if newline_after_fence != -1:
+            # Look for the closing triple backticks after that
+            end = s.find("```", newline_after_fence + 1)
+            if end != -1:
+                # Extract the content between fences
+                code_block = s[newline_after_fence + 1 : end]
+                return code_block.strip()
+
+    # Fallback to returning the cleaned-up string
+    return s.strip()

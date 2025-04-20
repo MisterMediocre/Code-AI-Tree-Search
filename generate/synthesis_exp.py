@@ -94,6 +94,8 @@ def main():
                 print(f"Problem {i} has failed before, args.rerun not enabled, skipping")
                 continue
 
+
+        print("\n\n\n")
         print(f"Solving Problem #{i}")
 
         if args.dataset == 'apps':
@@ -129,24 +131,31 @@ def main():
 
         start = time.time()
 
-        if args.peek:
-            # for sanity check, use the ground truth solution
-            states = [env.get_canonical_state()]
-            info = {'sample_times': 0}
-        else:
-            # run code generation
-            if args.alg == 'mcts':
-                from uct import uct_exp
-                states, info = uct_exp(args, env, dp, log_loc, start)
-            elif args.alg == 'mcts-multi':
-                from uct import uct_multistep_exp
-                states, info = uct_multistep_exp(args, env, dp, log_loc, start)
-            elif args.alg == 'bs':
-                states, info = bs_exp(args, env, dp)
-            elif args.alg == 'sample':
-                states, info = sample_exp(args, env, dp)
+
+        try:
+            if args.peek:
+                # for sanity check, use the ground truth solution
+                states = [env.get_canonical_state()]
+                info = {'sample_times': 0}
             else:
-                raise Exception(f"Unknown alg {args.alg}.")
+                # run code generation
+                if args.alg == 'mcts':
+                    from uct import uct_exp
+                    states, info = uct_exp(args, env, dp, log_loc, start)
+                elif args.alg == 'mcts-multi':
+                    from uct import uct_multistep_exp
+                    states, info = uct_multistep_exp(args, env, dp, log_loc, start)
+                elif args.alg == 'bs':
+                    states, info = bs_exp(args, env, dp)
+                elif args.alg == 'sample':
+                    states, info = sample_exp(args, env, dp)
+                else:
+                    raise Exception(f"Unknown alg {args.alg}.")
+        except Exception as e:
+            print(f"Problem {i} failed with exception {e}")
+            with open(log_loc, "w") as f:
+                f.write(str(e))
+            continue
 
         if states is None or len(states) == 0:
             continue
@@ -164,23 +173,26 @@ def main():
 
         best_idx = np.argmax(train_rewards)
 
+        print()
         print('final program:')
+        print()
         print(output_strs[best_idx])
+        print()
         print('train reward', train_rewards[best_idx])
         print('test reward', test_rewards[best_idx])
         print('time elapsed', time_elapsed[-1] if isinstance(time_elapsed, list) else time_elapsed)
         print('sample times', info['sample_times'])
+        print('DEBUG INFO', info)
 
         with open(code_loc, "w") as f:
-            json.dump({'codes': output_strs, 'rewards': test_rewards, 'train rewards': train_rewards,
-                       'time': time_elapsed, 'sample times': info['sample_times']}, f)
-
+            json.dump({'prompt': env.init_prompt,'codes': output_strs, 'rewards': test_rewards, 'train rewards': train_rewards,
+                       'time': time_elapsed, 'sample times': info['sample_times']}, f, indent=2)
 
 if __name__ == '__main__':
     import argparse
 
     parser = argparse.ArgumentParser()
-    parser.add_argument("--arch", default="gpt2", choices=transformers.GPT2_PRETRAINED_MODEL_ARCHIVE_LIST)
+    parser.add_argument("--arch", default="gpt2")
     parser.add_argument("-l", "--load", default="../models/1.5B", type=str)
     parser.add_argument("--load-value", default=None, type=str, help="An optional value function for evaluating partial programs.")
     parser.add_argument("-t","--test-loc", default="../data_split/test.json", type=str, help="This file specifies the locations of the test set of the code dataset.")
@@ -250,6 +262,9 @@ if __name__ == '__main__':
 
     args.device = torch.device('cuda') if torch.cuda.is_available() and not args.no_cuda\
                   else torch.device('cpu')
+
+    # For local runs on a Macbook
+    # args.device = torch.device('mps')
 
     if args.alg == 'sample':
         args.ts_mode = 'sample'

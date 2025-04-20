@@ -135,7 +135,15 @@ class APPSProgramEnv(ProgramEnv):
             return self.cached_reward[tuple(s)]
 
         output_str = self.convert_state_to_program(s)
+
+        print("")
+        print("Generated program:")
+        print(output_str)
+        print("")
+
         reward = compute_reward(self.prob_path, output_str, mode=mode, public_test_cases=self.public_test_cases)
+
+        print("Training reward:", reward)
 
         if mode == 'train':
             self.cached_reward[tuple(s)] = reward
