@@ -2,6 +2,7 @@ import copy
 import json
 import os
 import warnings
+import logging
 from abc import abstractmethod, ABC
 from collections import OrderedDict
 from types import SimpleNamespace
@@ -136,14 +137,14 @@ class APPSProgramEnv(ProgramEnv):
 
         output_str = self.convert_state_to_program(s)
 
-        print("")
-        print("Generated program:")
-        print(output_str)
-        print("")
+        logging.debug("Generated program:")
+        logging.debug(output_str)
+        logging.debug("")
+
 
         reward = compute_reward(self.prob_path, output_str, mode=mode, public_test_cases=self.public_test_cases)
 
-        print("Training reward:", reward)
+        logging.debug("Training reward: %s", reward)
 
         if mode == 'train':
             self.cached_reward[tuple(s)] = reward

@@ -3,6 +3,7 @@ import os
 import pprint
 import sys
 import time
+import logging
 
 import torch
 import transformers
@@ -70,6 +71,11 @@ def main():
 
     if not os.path.exists(args.save):
         os.makedirs(args.save, exist_ok=True)
+
+    # Setup up debug logging
+    level = logging.DEBUG if args.debug else logging.INFO
+    logging.basicConfig(level=level, format='%(asctime)s %(levelname)s %(message)s')
+
 
     # pre-processing dataset
     if args.dataset == 'apps':

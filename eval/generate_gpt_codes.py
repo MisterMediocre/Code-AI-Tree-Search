@@ -5,6 +5,7 @@ Useful functions from original code generation script from APPS.
 import io
 import json
 import random
+import logging
 
 import os
 import re
@@ -108,7 +109,7 @@ def get_output_str_from_state_for_apps(s):
     s = s.replace("<|endoftext|>", "")
 
     if 'if __name__ == "__main__":' in s:
-        print("Replacing __name__ == '__main__' with True")
+        logging.debug("Replacing __name__ == '__main__' with True")
         # Perform the substitution
         s = re.sub(r'if __name__ == "__main__":', 'if True:', s)
 

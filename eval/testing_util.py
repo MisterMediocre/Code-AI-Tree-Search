@@ -26,6 +26,7 @@ from typing import List, Tuple
 from unittest.mock import patch, mock_open
 
 from pyext import RuntimeModule
+import logging
 
 from enum import Enum
 
@@ -361,7 +362,7 @@ def run_test(prob_path: str = None, problem_list: List[str] = None, prob_index: 
                         if isinstance(output[0], str):
                             tmp_result = tmp_result or ([e.strip() for e in output] == in_outs["outputs"][index])
                 except Exception as e:
-                    print(f"Failed check1 exception = {e}")
+                    logging.debug(f"Failed check1 exception = {e}")
                     pass
 
                 if tmp_result == True:
@@ -384,7 +385,7 @@ def run_test(prob_path: str = None, problem_list: List[str] = None, prob_index: 
                     if isinstance(in_outs["outputs"][index], list):
                         tmp_result = tmp_result or (output == in_outs["outputs"][index])
                 except Exception as e:
-                    print(f"Failed check2 exception = {e}")
+                    logging.debug(f"Failed check2 exception = {e}")
                     pass
 
                 if tmp_result == True:
@@ -413,7 +414,7 @@ def run_test(prob_path: str = None, problem_list: List[str] = None, prob_index: 
                     if isinstance(in_outs["outputs"][index], list):
                         tmp_result = tmp_result or (output == in_outs["outputs"][index])
                 except Exception as e:
-                    print(f"Failed check3 exception = {e}")
+                    logging.debug(f"Failed check3 exception = {e}")
                     pass
 
                 try:
@@ -446,7 +447,7 @@ def run_test(prob_path: str = None, problem_list: List[str] = None, prob_index: 
                 try:
                     tmp_result = (output == in_outs["outputs"][index])
                 except Exception as e:
-                    print(f"Failed check4 exception = {e}")
+                    logging.debug(f"Failed check4 exception = {e}")
                     continue
 
                 if tmp_result == True:
@@ -469,7 +470,7 @@ def run_test(prob_path: str = None, problem_list: List[str] = None, prob_index: 
                     tmp_result = (set(frozenset(s) for s in output) == set(
                         frozenset(s) for s in in_outs["outputs"][index]))
                 except Exception as e:
-                    print(f"Failed check5 exception = {e}")
+                    logging.debug(f"Failed check5 exception = {e}")
 
                 # if they are all numbers, round so that similar numbers are treated as identical
                 try:
@@ -477,7 +478,7 @@ def run_test(prob_path: str = None, problem_list: List[str] = None, prob_index: 
                                                 set(frozenset(round(float(t), 3) for t in s) for s in
                                                     in_outs["outputs"][index]))
                 except Exception as e:
-                    print(f"Failed check6 exception = {e}")
+                    logging.debug(f"Failed check6 exception = {e}")
 
                 if tmp_result == True and debug:
                     print("PASSED")
