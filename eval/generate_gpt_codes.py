@@ -42,7 +42,7 @@ def reindent_code(codestr):
 
     return ret.getvalue()
 
-def generate_apps_prompt(args, test_case_path, prompt_path, solutions_path, tokenizer, starter_path=None):
+def generate_apps_prompt(args, test_case_path, prompt_path, solutions_path, tokenizer, starter_path=None, tutorial_path=None):
     _input = "\nQUESTION:\n"
     with open(prompt_path, "r") as f:
         data = f.readlines()
@@ -58,9 +58,18 @@ def generate_apps_prompt(args, test_case_path, prompt_path, solutions_path, toke
         #_input += "\n\n"
         pass
 
+    if args.peek_tutorial and tutorial_path != None:
+        with open(tutorial_path, "r") as f:
+            data = f.readlines()
+            data = "".join(data)
+
+        _input += "\n\nTUTORIAL:\n" + data
+
+
     with open(test_case_path, "r") as f:
         data = json.load(f)
 
+    _input += "\n\nInstructions:\n"
     _input += "\n\nYou are a Python3 code generator.  Output **only** valid Python code. No explanations, no commentary, no filenames, no Markdown formatting. You will spit out a code block that can be pasted into any script. It must read the input, execute the logic and then print the output. Ensure that you invoke the main() or solve() function at the end if you're writing your code inside them."
 
     _input += "\nANSWER:\n"

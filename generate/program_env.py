@@ -81,7 +81,7 @@ class APPSProgramEnv(ProgramEnv):
     """
     Code generation environment for APPS dataset.
     """
-    def __init__(self, prob_path, tokenizer, model_name, horizon, public_test_cases=None):
+    def __init__(self, prob_path, tokenizer, model_name, horizon, public_test_cases=None, peek_tutorial=False):
         self.prob_path = prob_path
         self.tokenizer = tokenizer
         self.model = model_name
@@ -93,6 +93,7 @@ class APPSProgramEnv(ProgramEnv):
         prompt_path = os.path.join(prob_path, "question.txt")
         starter_path = os.path.join(prob_path, "starter_code.py")
         solutions_path = os.path.join(prob_path, "solutions.json")
+        tutorial_path = os.path.join(prob_path, "tutorial.txt")
 
         if not os.path.exists(starter_path):
             starter_path = None
@@ -103,11 +104,17 @@ class APPSProgramEnv(ProgramEnv):
         if public_test_cases == 'desc' and not os.path.exists(public_test_case_path):
             raise Exception('using public test cases in problem description, but public test cases missing.')
 
+
+        if peek_tutorial and not os.path.exists(tutorial_path):
+            raise Exception('using peek tutorial, but tutorial missing.')
+
+
         from eval.generate_gpt_codes import generate_apps_prompt
         # generate prompt to encode question text and an "ANSWER" prompt to the state
         # no need to load the full arglist here, it only needs to check the value of peeking (using default value 0.0 here)
         gpt_args = SimpleNamespace(peeking=0.0)
-        state, _ = generate_apps_prompt(gpt_args, test_case_path, prompt_path, solutions_path, tokenizer, starter_path)
+        state, _ = generate_apps_prompt(gpt_args, test_case_path, prompt_path, solutions_path, tokenizer, starter_path, tutorial_path)
+
 
         self.init_prompt = copy.copy(state)
 

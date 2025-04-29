@@ -91,6 +91,9 @@ def main():
         code_loc = os.path.join(args.save, f"{args.prefix}{i}.json")
         log_loc = os.path.join(args.save, f"{args.prefix}{i}.log")
 
+        if args.peek_tutorial:
+            pass
+
         if not args.rerun:
             # if not forcing rerun, check if this experiment has run or failed before
             if os.path.exists(code_loc):
@@ -111,7 +114,8 @@ def main():
                 tokenizer=tokenizer,
                 model_name=args.load,
                 horizon=args.horizon,
-                public_test_cases=args.public_cases
+                public_test_cases=args.public_cases,
+                peek_tutorial=args.peek_tutorial,
             )
         else:
             raise Exception(f"Unknown dataset {args.dataset}")
@@ -263,6 +267,10 @@ if __name__ == '__main__':
     parser.add_argument("--public-cases", type=str, default='half', help="Number of public test cases to use for evaluation.")
     parser.add_argument('--overfit', action='store_true', default=False, help="Use the private test case as public tesst case for generation.")
     parser.add_argument('--early-stop', action='store_true', default=False, help="Stop when a program with reward=1 is found.")
+
+    parser.add_argument('--peek-tutorial', action='store_true', default=False, help="Use the tutorial text as part of the prompt. Crashes if the tutorial text is not available.")
+
+
 
     args = parser.parse_args()
 
