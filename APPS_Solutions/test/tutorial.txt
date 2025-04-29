@@ -1,0 +1,5 @@
+I suppose there are some solutions without cases handling, but I'll describe my own, it handling approximately 5 cases.
+
+Firstly, let nn = n - k(k+1)/2. If nn < 0 then the answer is "NO" already. Otherwise let's construct the array a, where all a_i are ⌈nn / k⌉ (except rightmost nn % k values, they are ⌈nn / k⌉). It is easy to see that the sum of this array is nn, it is sorted in non-decreasing order and the difference between the maximum and the minimum elements is not greater than 1. Let's add 1 to a_1, 2 to a_2 and so on (this is what we subtract from n at the beginning of the solution). Then if nn ≠ k - 1 or k = 1 then this answer is correct. Otherwise we got some array of kind 1, 3, ..., a_k. How do we fix that? For k = 2 or k = 3 there is no answer for this case (you can try to prove it or try to find answers for cases n = 4, k = 2 and n = 8, k = 3). Otherwise k > 3 and we can subtract one from a_2 and add it to a_k and this answer will be correct (this also can be proved with some easy formulas).
+
+Time complexity: O(k)
