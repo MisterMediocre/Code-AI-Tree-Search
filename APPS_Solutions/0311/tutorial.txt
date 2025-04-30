@@ -1,0 +1,1 @@
+Iterate over size of the team. Now you know how many players should play with left hand, but are not left-handed (because there are no so much left-handed players). The same with right hand. Just check if sum of these values is not more than number of ambidexters.

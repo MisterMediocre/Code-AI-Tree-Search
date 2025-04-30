@@ -1,0 +1,5 @@
+Let's count the values dp[r][s][p] — the probability of the situation when r rocks, s scissors and p papers are alive. The initial probability is 1, and in order to calculate the others we should perform the transitions.
+
+Imagine we have r rocks, s scissors and p papers. Let's find the probability of the rock killing scissors (the other probabilities are calculated in the same way). The total number of the possible pairs where one species kills the other one is rs + rp + sp, and the number of possible pairs (rock, scissors) is rs. As all meetings are equiprobable, the probability we want to find is rs / (rs + rp + sp). This is the probability with which we go to the state dp[r][s − 1][p], with the number of scissors less by one.
+
+In the end, for example, to get the probability of the event that the rocks are alive, we should sum all values dp[i][0][0] for i from 1 to r (the same goes to the other species).

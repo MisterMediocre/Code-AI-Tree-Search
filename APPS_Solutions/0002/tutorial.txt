@@ -1,0 +1,1 @@
+Notice that the next lucky year always looks like (first digit of the current + 1) · 10^(number of digits of the current - 1). It holds also for numbers starting with 9, it will be 10 · 10^(number of digits - 1). The answer is the difference between the next lucky year and current year.
