@@ -271,7 +271,6 @@ if __name__ == '__main__':
     parser.add_argument('--peek-tutorial', action='store_true', default=False, help="Use the tutorial text as part of the prompt. Crashes if the tutorial text is not available.")
 
 
-
     args = parser.parse_args()
 
     args.device = torch.device('cuda') if torch.cuda.is_available() and not args.no_cuda\

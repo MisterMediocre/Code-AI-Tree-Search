@@ -154,6 +154,7 @@ cython_debug/
 .DS_Store
 
 APPS/
+APPS.tar.gz
 CodeContests/
 models/
 *results*/
