@@ -112,9 +112,8 @@ class APPSProgramEnv(ProgramEnv):
         from eval.generate_gpt_codes import generate_apps_prompt
         # generate prompt to encode question text and an "ANSWER" prompt to the state
         # no need to load the full arglist here, it only needs to check the value of peeking (using default value 0.0 here)
-        gpt_args = SimpleNamespace(peeking=0.0)
+        gpt_args = SimpleNamespace(peeking=0.0, peek_tutorial=peek_tutorial)
         state, _ = generate_apps_prompt(gpt_args, test_case_path, prompt_path, solutions_path, tokenizer, starter_path, tutorial_path)
-
 
         self.init_prompt = copy.copy(state)
 

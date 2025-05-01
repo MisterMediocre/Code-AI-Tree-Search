@@ -91,9 +91,6 @@ def main():
         code_loc = os.path.join(args.save, f"{args.prefix}{i}.json")
         log_loc = os.path.join(args.save, f"{args.prefix}{i}.log")
 
-        if args.peek_tutorial:
-            pass
-
         if not args.rerun:
             # if not forcing rerun, check if this experiment has run or failed before
             if os.path.exists(code_loc):
