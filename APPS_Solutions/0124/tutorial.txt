@@ -1,0 +1,11 @@
+First of all, we can see the grape preference is hierarchically inclusive: the grapes' types Andrew enjoys are some of those that Dmitry does, and Dmitry's favorites are included in Michal's.
+
+Let's distribute the grapes to satisfy Andrew first, then to Dmitry, then Michal. If any of the following criteria is not satisfied (which means one of our friends is not happy), then we can immediately say that no distributions are available:
+
+• Andrew must have at least a green grapes. So we need, x ≤ a.
+• Dmitry can have purple grapes and/or the remaining green grapes. In other words, y ≤ a + b - x (the minus x is because x green grapes have been given to Andrew already).
+• Michal can have grapes of any kinds. In other words, z ≤ a + b + c - x - y (similar explanations like above for both minus x and minus y).
+
+If all three criteria are satisfied, then a grape distribution is possible.
+
+Total complexity: O(1).

@@ -1,0 +1,9 @@
+It's easy to count who wins and after how many "fights", but it's harder to say, that game won't end. How to do it?
+
+Firstly let's count a number of different states that we can have in the game. Cards can be arranged in any one of n! ways. In every of this combination, we must separate first soldier's cards from the second one's. We can separate it in n + 1 places (because we can count the before and after deck case too).
+
+So war has (n + 1)! states. If we'd do (n + 1)! "fights" and we have not finished the game yes, then we'll be sure that there is a state, that we passed at least twice. That means that we have a cycle, and game won't end.
+
+After checking this game more accurately I can say that the longest path in the state-graph for n = 10 has length 106, so it is enough to do 106 fights, but solutions that did about 40 millions also passed.
+
+Alternative solution is to map states that we already passed. If we know, that the longest time needed to return to state is about 100, then we know that this solution is correct and fast.

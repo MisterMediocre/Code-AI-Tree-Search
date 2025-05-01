@@ -1,0 +1,11 @@
+1132E - Knapsack
+
+Let's consider the optimal answer. Suppose we take cᵢ items of weight i.
+
+Let L be the least common multiple of all weights (that is 840). Then we may represent cᵢ as cᵢ = ⌊L / i⌋·pᵢ + qᵢ, where 0 ≤ q < ⌊L / i⌋. Let’s do the following trick: we will take qᵢ items of weight i, and all the remaining items of this weight can be merged into some items of weight L.
+
+Then we can write a brute force solution that picks less than ⌊L / i⌋ items of each weight, transforms the remaining ones into items of weight L as much as possible, and when we fix the whole subset, adds maximum possible number of items of weight L to the answer.
+
+This works in something like ∏₍ᵢ₌₁ ₜₒ ₈₎ ⌊L / i⌋ = L⁸ / 8! operations, which is too much.
+
+How can we speed it up? Rewrite it using dynamic programming! When we have fixed the number of items we take from x first sets, the only two things that matter now are the current total weight of taken items and the number of items of weight L we can use; and it’s obvious that the more items of weight L we can use, the better. So let’s write the following dynamic programming solution: dp[x][y] — maximum number of items of weight L we can have, if we processed first x types of items, and current total weight is y. Note that the second dimension should have size 8L.

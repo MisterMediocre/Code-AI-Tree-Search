@@ -1,0 +1,3 @@
+The constraints in this task allowed us to simply iterate over the closed tab and check the answer, but we can solve it more quickly — calculate the sum for each value modulo k and count the total sum for the whole array. After that, you just need to go through the module tab numbers that we delete, and update the answer.
+
+Complexity — O(n²) or O(n + k).

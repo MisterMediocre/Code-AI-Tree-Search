@@ -1,0 +1,5 @@
+The statement laid emphasis on the constraint that the elements are pairwise distinct. How is this important?
+
+In fact, this implies that if the resulting sequence is increasing, then swapping any two of its elements will result in another sequence which is not increasing.
+
+And we're able to perform a swap on any resulting sequence if and only if k ≥ 2. Thus if k ≥ 2, the answer would always be "Yes". For cases where k = 1, we replace the only zero in sequence a with the only element in b, and check the whole sequence. Hackable solutions include those only checking the replaced element and its neighbours, and those missing the replaced element.

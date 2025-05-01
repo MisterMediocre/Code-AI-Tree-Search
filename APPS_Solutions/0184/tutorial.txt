@@ -1,0 +1,15 @@
+Hint: Dynamic programming problem. To handle repetitions we have to construct the number from right to the left and calculate the answer when we reach a number equivalent to 0 modulo k.
+
+Solution: Let's define count(i, j) as a recursive function that calculates the number of numbers consisting of n digits satisfying the conditions of the problem and with a specific suffix of length i, Sᵢ such that Sᵢ ≡ j (mod k).
+
+We want to avoid repetition so by constructing the number from the right to the left when we reach a state with j = 0 with suffix ≠ 0 we return the answer immediately so any other suffix that contains this suffix won’t be calculated.
+
+So the base cases are count(n, 0) = 1, count(i, 0) = 9 * 10ⁿ⁻ⁱ⁻¹ : i < n.
+
+So state transitions will be  
+count(i, j) = ∑₍ₓ₌₀ ₜₒ ₉₎ count(i + 1, (j + (x * 10ⁱ)) % k)  
+(We add a digit to the left).
+
+And we can handle j = 0 case coming from a zero suffix easily with a boolean variable we set to true when we use a digit ≠ 0 in constructing the number.
+
+Time complexity: O(n * k)

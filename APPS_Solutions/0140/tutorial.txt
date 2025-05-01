@@ -1,0 +1,21 @@
+We can add an antenna (x = 0, s = 0). It will not modify the answer, because it would be non-optimal to increase the scope of this antenna.
+
+Let dpₓ be the minimum cost to cover all positions from x to m inclusive, knowing that position x is covered. We compute dp in decreasing order of x.
+
+Base case is dpₘ := 0.
+
+The default transition is dpₓ := (m − x).
+
+If position x + 1 is initially covered, dpₓ := dpₓ₊₁
+
+Otherwise, let's consider all antennas and their initial intervals [lᵢ; rᵢ]. If x < lᵢ, let  
+u = (lᵢ − x − 1), then a possible transition is dpₓ := u + dpₘᵢₙ(m, rᵢ + u).
+
+We take the minimum of all these transitions. Note that we always extend intervals as less as possible, but it's optimal because:
+
+• If after using this interval i, we use another interval j (at the right of i), the time spent to extend i could have been used to extend j instead, which will be more optimal.
+• If i was the last interval used, we don't care because the default transition will take care of this case.
+
+The final answer will be dp₀.
+
+There are O(m) states and O(n) transitions, hence final complexity is O(nm) with very low constant. O(n² · m) can also get AC because of very low constant.

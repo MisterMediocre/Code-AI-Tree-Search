@@ -1,0 +1,1 @@
+The answer is always less or equal to 98. We can go through numbers from 1 to 99 and find the first one which we cannot make using cubes.

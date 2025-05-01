@@ -1,0 +1,24 @@
+Notice that xᵃ for x ≥ 2 has no more than 60 powers which give numbers no greater than 10¹⁸.
+
+So let's store all possible sums of all powers of x and y. Now the answer to the query can be obtained in linear time by checking difference between neighbouring unlucky years in sorted order.
+
+Don't forget that you should handle multiplying of such big numbers very carefully. For example, instead of writing
+
+while (num <= 1e18)
+    num = num * x
+
+or
+
+while (num * x <= 1e18)
+    num = num * x
+
+you should write
+
+while (num <= 1e18 / x)
+    num = num * x
+
+to avoid getting overflow errors of 64-bit type.
+
+Integer division will work fine in that case because num · x will never exceed 10¹⁸ if num doesn’t exceed ⌊10¹⁸ / x⌋.
+
+Overall complexity: O(n · log n).
