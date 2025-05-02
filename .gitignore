@@ -157,7 +157,7 @@ APPS/
 APPS.tar.gz
 CodeContests/
 models/
-*results*/
+# *results*/
 
 train/checkpoints
 

@@ -1,0 +1,14 @@
+{
+  "prompt": "\nQUESTION:\nApart from having lots of holidays throughout the year, residents of Berland also have whole lucky years. Year is considered lucky if it has no more than 1 non-zero digit in its number. So years 100, 40000, 5 are lucky and 12, 3001 and 12345 are not.\n\nYou are given current year in Berland. Your task is to find how long will residents of Berland wait till the next lucky year.\n\n\n-----Input-----\n\nThe first line contains integer number n (1 \u2264 n \u2264 10^9) \u2014 current year in Berland.\n\n\n-----Output-----\n\nOutput amount of years from the current year to the next lucky one.\n\n\n-----Examples-----\nInput\n4\n\nOutput\n1\n\nInput\n201\n\nOutput\n99\n\nInput\n4000\n\nOutput\n1000\n\n\n\n-----Note-----\n\nIn the first example next lucky year is 5. In the second one \u2014 300. In the third \u2014 5000.\n\nTUTORIAL:\nNotice that the next lucky year always looks like (first digit of the current + 1) \u00b7 10^(number of digits of the current - 1). It holds also for numbers starting with 9, it will be 10 \u00b7 10^(number of digits - 1). The answer is the difference between the next lucky year and current year.\n\n\nInstructions:\n\n\nYou are a Python3 code generator.  Output **only** valid Python code. No explanations, no commentary, no filenames, no Markdown formatting. You will spit out a code block that can be pasted into any script. It must read the input, execute the logic and then print the output. Ensure that you invoke the main() or solve() function at the end if you're writing your code inside them.\nANSWER:\n",
+  "codes": [
+    "def main():\n    n = int(input())\n    next_lucky = (n // 10 + 1) * 10 ** (len(str(n)) - 1)\n    print(next_lucky - n)\n\nif True:\n    main()"
+  ],
+  "rewards": [
+    0.0
+  ],
+  "train rewards": [
+    0.7111111111111111
+  ],
+  "time": 2.6285436153411865,
+  "sample times": 5
+}
