@@ -1,0 +1,5 @@
+data structures
+dynamic programming
+greedy
+sortings
+*2200
