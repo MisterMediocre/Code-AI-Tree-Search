@@ -21,3 +21,7 @@ safetensors
 # for plotting trees and experiment figures
 networkx
 matplotlib
+
+#for determining whether python is valid:
+pytest
+parso
